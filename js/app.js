@@ -18,18 +18,16 @@
   //
 
   function template() {
-    if (data > 0) {
-      return --data;
-    }
+    if (data > 0) return --data;
+
+    restart.disabled = false;
+    clearInterval(interval);
+
+    return 0;
   }
 
   function render() {
-    if (data > 0) {
-      app.textContent = template();
-    } else {
-      restart.disabled = false;
-      clearInterval(interval);
-    }
+    app.textContent = template();
   }
 
   function start() {
@@ -47,9 +45,7 @@
   start();
 
   document.body.addEventListener("click", function(event) {
-    if (event.target.id === "restart") {
-      start();
-    }
+    if (event.target.id === "restart") start();
   });
 
 })();
