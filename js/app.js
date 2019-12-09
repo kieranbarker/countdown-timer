@@ -7,7 +7,7 @@
   //
 
   var interval;
-  var data = 10;
+  var data = 60;
 
   var app = document.querySelector("#app");
   var restart = document.querySelector("#restart");
@@ -33,7 +33,7 @@
   }
 
   function start() {
-    data = 10;
+    data = 60;
     restart.disabled = true;
     app.textContent = data;
     interval = setInterval(render, 1000);
