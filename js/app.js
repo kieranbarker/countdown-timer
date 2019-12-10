@@ -10,7 +10,7 @@
   var app = document.querySelector("#app");
 
   // Store duration to a variable
-  var duration = 10;
+  var duration = 60;
 
   // The state/data object
   var data = {
