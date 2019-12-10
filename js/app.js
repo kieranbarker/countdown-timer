@@ -6,43 +6,82 @@
   // Variables
   //
 
-  var interval;
-  var data = 60;
-
+  // Get the #app element from the DOM
   var app = document.querySelector("#app");
-  var restart = document.querySelector("#restart");
+
+  // Store duration to a variable
+  var duration = 60;
+
+  // The state/data object
+  var data = {
+  	timer: duration,
+  	done: false
+  };
+
+  // A placeholder for the countdown interval
+  var countdown;
 
 
   //
   // Functions
   //
 
+  /**
+   * Get the template markup
+   * @return {String} The HTML string
+   */
   function template() {
-    // Reduce the second count while the timer is running
-    if (data > 0) return --data;
+    // If the timer is done, show a different UI
+    if (data.done) {
+      return "⏰ <p><button id='restart'>Restart Timer</button></p>";
+    }
 
-    // Enable the restart button and stop the timer
-    restart.disabled = false;
-    clearInterval(interval);
-
-    // Return zero since the timer has stopped
-    return 0;
+    // Return the value of data.timer
+    return data.timer;
   }
 
+  /**
+   * Render the UI
+   */
   function render() {
-    app.textContent = template();
+    // If there are no updates to the UI, do nothing
+    if (app.innerHTML === template()) return;
+
+    // Update the UI
+    app.innerHTML = template();
   }
 
+  /**
+   * Start the timer
+   */
   function start() {
-    // Reset the second count
-    data = 60;
+    // Reset the data
+    data.timer = duration;
+    data.done = false;
 
-    // Set the initial state of the DOM
-    restart.disabled = true;
-    app.textContent = data;
+    // Run an initial render
+    render();
 
-    // Start the countdown
-    interval = setInterval(render, 1000);
+    // Update the timer every second
+    countdown = window.setInterval(function() {
+      // Get the new timer value
+      var time = data.timer - 1;
+
+      // If the timer hits 0, set as done
+      var done = time === 0 ? true : false;
+
+      // Update data
+      data.timer = time;
+      data.done = done;
+
+      // Render new UI
+      render();
+
+      // If the timer is done, stop it from running
+      if (done) {
+        window.clearInterval(countdown);
+      }
+    }, 1000);
   }
 
 
@@ -50,10 +89,14 @@
   // Init
   //
 
+  // Start the timer on page load
   start();
 
+  // When the restart button is clicked, restart the timer
   document.body.addEventListener("click", function(event) {
-    if (event.target.id === "restart") start();
-  });
+    if (event.target.id === "restart") {
+      start();
+    }
+  }, false);
 
 })();
