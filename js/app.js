@@ -52,6 +52,29 @@
   }
 
   /**
+   * Update the timer
+   */
+  function update() {
+    // Get the new timer value
+    var time = data.timer - 1;
+
+    // If the timer hits 0, set as done
+    var done = time === 0 ? true : false;
+
+    // Update data
+    data.timer = time;
+    data.done = done;
+
+    // Render new UI
+    render();
+
+    // If the timer is done, stop it from running
+    if (done) {
+      window.clearInterval(countdown);
+    }
+  }
+
+  /**
    * Start the timer
    */
   function start() {
@@ -63,25 +86,7 @@
     render();
 
     // Update the timer every second
-    countdown = window.setInterval(function() {
-      // Get the new timer value
-      var time = data.timer - 1;
-
-      // If the timer hits 0, set as done
-      var done = time === 0 ? true : false;
-
-      // Update data
-      data.timer = time;
-      data.done = done;
-
-      // Render new UI
-      render();
-
-      // If the timer is done, stop it from running
-      if (done) {
-        window.clearInterval(countdown);
-      }
-    }, 1000);
+    countdown = window.setInterval(update, 1000);
   }
 
 
