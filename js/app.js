@@ -31,13 +31,19 @@
    * @return {String} The HTML string
    */
   function template() {
+    // Get the number of minutes remaining
+    var minutes = Math.floor(data.timer / 60);
+
+    // Get the number of seconds remaining
+    var seconds = data.timer % 60;
+
     // If the timer is done, show a different UI
     if (data.done) {
       return "⏰ <p><button id='restart'>Restart Timer</button></p>";
     }
 
     // Return the value of data.timer
-    return data.timer;
+    return minutes + ":" + seconds.toString().padStart(2, "0");
   }
 
   /**
