@@ -14,8 +14,8 @@
 
   // The state/data object
   var data = {
-  	timer: duration,
-  	done: false
+    timer: duration,
+    done: false
   };
 
   // A placeholder for the countdown interval
