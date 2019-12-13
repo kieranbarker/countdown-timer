@@ -52,7 +52,7 @@
         "</button>" +
       "</p>";
 
-    // Add the start button to the string
+    // Add the reset button to the string
     string += "<p class='di'><button class='ma1 f3' type='button'>Reset</button></p>";
 
     // Return the HTML string
@@ -131,7 +131,7 @@
    * Reset the timer
    */
   function reset(event) {
-    // Bail if the restart button wasn't clicked
+    // Bail if the reset button wasn't clicked
     if (event.target.textContent !== "Reset") return;
 
     // Reset the data
