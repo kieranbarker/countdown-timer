@@ -53,7 +53,7 @@
       "</p>";
 
     // Add the start button to the string
-    string += "<p class='di'><button class='ma1 f3' type='button'>Restart</button></p>";
+    string += "<p class='di'><button class='ma1 f3' type='button'>Reset</button></p>";
 
     // Return the HTML string
     return string;
@@ -128,11 +128,11 @@
   }
 
   /**
-   * Restart the timer
+   * Reset the timer
    */
-  function restart(event) {
+  function reset(event) {
     // Bail if the restart button wasn't clicked
-    if (event.target.textContent !== "Restart") return;
+    if (event.target.textContent !== "Reset") return;
 
     // Reset the data
     data.timer = duration;
@@ -154,11 +154,11 @@
   // Do an initial render on page load
   render();
 
-  // Handle start, stop, and restart on click
+  // Handle start, stop, and reset on click
   app.addEventListener("click", function(event) {
     start(event);
     pause(event);
-    restart(event);
+    reset(event);
   }, false);
 
 })();
