@@ -28,6 +28,30 @@
   //
 
   /**
+   * Reactively update the data object
+   * @param {Object} object The updated data object
+   */
+  function setData(object) {
+    // Update the data object
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        data[key] = object[key];
+      }
+    }
+
+    // Render the new UI
+    render();
+  }
+
+  /**
+   * Create an immutable copy of the data object
+   * @return {Object} An immutable copy of the data object
+   */
+  function getData() {
+    return JSON.parse(JSON.stringify(data));
+  }
+
+  /**
    * Get the template markup
    * @return {String} The HTML string
    */
