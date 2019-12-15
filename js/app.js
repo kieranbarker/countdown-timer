@@ -28,6 +28,30 @@
   //
 
   /**
+   * Reactively update the data object
+   * @param {Object} object The updated data object
+   */
+  function setData(object) {
+    // Update the data object
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        data[key] = object[key];
+      }
+    }
+
+    // Render the new UI
+    render();
+  }
+
+  /**
+   * Create an immutable copy of the data object
+   * @return {Object} An immutable copy of the data object
+   */
+  function getData() {
+    return JSON.parse(JSON.stringify(data));
+  }
+
+  /**
    * Get the template markup
    * @return {String} The HTML string
    */
@@ -52,7 +76,7 @@
         "</button>" +
       "</p>";
 
-    // Add the start button to the string
+    // Add the reset button to the string
     string += "<p class='di'><button class='ma1 f3' type='button'>Reset</button></p>";
 
     // Return the HTML string
@@ -74,18 +98,21 @@
    * Update the timer
    */
   function update() {
+    // Get an immutable copy of the data object
+    var dataCopy = getData();
+
     // Get the new timer value
-    var time = data.timer - 1;
+    var time = dataCopy.timer - 1;
 
     // If the timer hits 0, set as done
     var done = time === 0 ? true : false;
 
-    // Update data
-    data.timer = time;
-    data.done = done;
+    // Update immutable copy
+    dataCopy.timer = time;
+    dataCopy.done = done;
 
-    // Render new UI
-    render();
+    // Update data and render new UI
+    setData(dataCopy);
 
     // If the timer is done, stop it from running
     if (done) {
@@ -100,14 +127,17 @@
     // Bail if the start button wasn't clicked
     if (event.target.textContent !== "Start") return;
 
-    // Play the timer
-    data.paused = false;
+    // Get an immutable copy of the data object
+    var dataCopy = getData();
+
+    // Update immutable copy
+    dataCopy.paused = false;
+
+    // Update data and render new UI
+    setData(dataCopy);
 
     // Update the timer every second
     countdown = window.setInterval(update, 1000);
-
-    // Render the new UI
-    render();
   }
 
   /**
@@ -117,30 +147,36 @@
     // Bail if the pause button wasn't clicked
     if (event.target.textContent !== "Pause") return;
 
-    // Pause the timer
-    data.paused = true;
+    // Get an immutable copy of the data object
+    var dataCopy = getData();
+
+    // Update immutable copy
+    dataCopy.paused = true;
+
+    // Update data and render new UI
+    setData(dataCopy);
 
     // Clear the countdown interval
     window.clearInterval(countdown);
-
-    // Render the new UI
-    render();
   }
 
   /**
    * Reset the timer
    */
   function reset(event) {
-    // Bail if the restart button wasn't clicked
+    // Bail if the reset button wasn't clicked
     if (event.target.textContent !== "Reset") return;
 
-    // Reset the data
-    data.timer = duration;
-    data.paused = true;
-    data.done = false;
+    // Get an immutable copy of the data object
+    var dataCopy = getData();
 
-    // Run an initial render
-    render();
+    // Update immutable copy
+    dataCopy.timer = duration;
+    dataCopy.paused = true;
+    dataCopy.done = false;
+
+    // Update data and render new UI
+    setData(dataCopy);
 
     // Clear the countdown interval
     window.clearInterval(countdown);
