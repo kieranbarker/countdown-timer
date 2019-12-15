@@ -150,6 +150,7 @@
 
   /**
    * Handle click events inside the app
+   * @param {Object} event The event object
    */
   function handleClicks(event) {
     // Start the timer when the user clicks the "Start" button
