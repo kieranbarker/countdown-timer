@@ -101,21 +101,15 @@
     // Get an immutable copy of the data object
     var dataCopy = getData();
 
-    // Get the new timer value
-    var time = dataCopy.timer - 1;
-
-    // If the timer hits 0, set as done
-    var done = time === 0 ? true : false;
-
     // Update immutable copy
-    dataCopy.timer = time;
-    dataCopy.done = done;
+    dataCopy.timer -= 1;
+    dataCopy.done = dataCopy.timer === 0 ? true : false;
 
     // Update data and render new UI
     setData(dataCopy);
 
     // If the timer is done, stop it from running
-    if (done) {
+    if (data.done) {
       window.clearInterval(countdown);
     }
   }
