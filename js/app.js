@@ -121,52 +121,31 @@
   }
 
   /**
-   * Start the timer
+   * Start or stop the timer
+   * @param {Boolean} start Whether to start (true) or stop (false) the timer
    */
-  function start(event) {
-    // Bail if the start button wasn't clicked
-    if (event.target.textContent !== "Start") return;
-
+  function startStop(start) {
     // Get an immutable copy of the data object
     var dataCopy = getData();
 
     // Update immutable copy
-    dataCopy.paused = false;
+    dataCopy.paused = start ? false : true;
 
     // Update data and render new UI
     setData(dataCopy);
 
-    // Update the timer every second
-    countdown = window.setInterval(update, 1000);
-  }
-
-  /**
-   * Pause the timer
-   */
-  function pause(event) {
-    // Bail if the pause button wasn't clicked
-    if (event.target.textContent !== "Pause") return;
-
-    // Get an immutable copy of the data object
-    var dataCopy = getData();
-
-    // Update immutable copy
-    dataCopy.paused = true;
-
-    // Update data and render new UI
-    setData(dataCopy);
-
-    // Clear the countdown interval
-    window.clearInterval(countdown);
+    // Start or stop the countdown interval
+    if (start) {
+      countdown = window.setInterval(update, 1000);
+    } else {
+      window.clearInterval(countdown);
+    }
   }
 
   /**
    * Reset the timer
    */
-  function reset(event) {
-    // Bail if the reset button wasn't clicked
-    if (event.target.textContent !== "Reset") return;
-
+  function reset() {
     // Get an immutable copy of the data object
     var dataCopy = getData();
 
@@ -182,6 +161,29 @@
     window.clearInterval(countdown);
   }
 
+  /**
+   * Handle click events inside the app
+   */
+  function handleClicks(event) {
+    // Start the timer when the user clicks the "Start" button
+    if (event.target.textContent === "Start") {
+      startStop(true);
+      return;
+    }
+
+    // Stop the timer when the user clicks the "Pause" button
+    if (event.target.textContent === "Pause") {
+      startStop(false);
+      return;
+    }
+
+    // Reset the timer when the user clicks the "Reset" button
+    if (event.target.textContent === "Reset") {
+      reset(event);
+      return;
+    }
+  }
+
 
   //
   // Init
@@ -191,10 +193,6 @@
   render();
 
   // Handle start, stop, and reset on click
-  app.addEventListener("click", function(event) {
-    start(event);
-    pause(event);
-    reset(event);
-  }, false);
+  app.addEventListener("click", handleClicks, false);
 
 })();
