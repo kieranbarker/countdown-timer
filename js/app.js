@@ -62,22 +62,15 @@
     // Get the number of seconds remaining
     var seconds = data.timer % 60;
 
-    // A placeholder for the HTML string to return
-    var string;
-
-    // Add the timer to the string
-    string = "<p>" + minutes + ":" + seconds.toString().padStart(2, "0") + "</p>";
-
-    // Add the start/stop button to the string
-    string +=
+    // The HTML string to return
+    var string =
+      "<p>" + minutes + ":" + seconds.toString().padStart(2, "0") + "</p>" +
       "<p class='di'>" +
         "<button class='ma1 f3' type='button'" + (data.done ? " disabled" : "") + ">" +
           (data.paused ? "Start" : "Pause") +
         "</button>" +
-      "</p>";
-
-    // Add the reset button to the string
-    string += "<p class='di'><button class='ma1 f3' type='button'>Reset</button></p>";
+      "</p>" +
+      "<p class='di'><button class='ma1 f3' type='button'>Reset</button></p>";
 
     // Return the HTML string
     return string;
