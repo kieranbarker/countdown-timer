@@ -139,11 +139,11 @@
     data.paused = true;
     data.done = false;
 
-    // Run an initial render
-    render();
-
     // Clear the countdown interval
     window.clearInterval(countdown);
+
+    // Run an initial render
+    render();
   }
 
 
